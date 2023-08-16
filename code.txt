@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Read Code from GitHub') {
+            steps {
+                // Clone the GitHub repository
+                git 'https://github.com/<username>/<repository>.git'
+                
+                // Get the latest commit ID
+                script {
+                    def commitID = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    
+                    // Display a message with the latest commit ID
+                    echo "Code has been successfully read and the latest commit ID is ${commitID}"
+                }
+            }
+        }
+    }
+}
